@@ -1,0 +1,12 @@
+lxml
+pandas
+spacy
+Flask
+Flask-WTF
+flask-babel
+Werkzeug
+geopy
+beautifulsoup4
+scikit-learn
+flair
+
