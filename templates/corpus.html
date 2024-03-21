@@ -1,0 +1,20 @@
+{% extends "index.html" %}
+{% block header %} {{ super() }} {% endblock %}
+{% block content %}
+<div class="selection">
+  <h2>Correction de la graphie</h2>
+  <div class="container">
+    <div class="box-outil-accueil" onclick="window.location.href='{{ url_for('normalisation') }}'">
+      <div class="rubrique-icon"></div>
+      <span class="rubrique-title"><h3>Normalisation de graphie ancienne</h3></span>
+      <span class="rubrique-text"><p>Uniformisation des variations graphiques et équivalences en français moderne.</p></span>
+    </div>
+    <div class="box-outil-accueil" onclick="window.location.href='{{ url_for('correction_erreur') }}'">
+      <div class="rubrique-icon"></div>
+      <span class="rubrique-title"><h3>Correction d'erreurs</h3></span>
+      <span class="rubrique-text"><p>Post traitement des sorties d'OCR ou amélioration de corpus bruités.</p></span>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block footer %} {{ super() }} {% endblock %}
