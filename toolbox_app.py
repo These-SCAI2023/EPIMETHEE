@@ -55,7 +55,7 @@ babel = Babel(app, locale_selector=get_locale)
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SECRET_KEY'] = SECRET_KEY
 
-app.config['MAX_CONTENT_LENGTH'] = 8 * 1024 * 1024 # Limit file upload to 8MB
+app.config['MAX_CONTENT_LENGTH'] = 20 * 1024 * 1024 # Limit file upload to 8MB
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MODEL_FOLDER'] = MODEL_FOLDER
 app.config['UTILS_FOLDER'] = UTILS_FOLDER
