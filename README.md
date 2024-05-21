@@ -1,40 +1,88 @@
 # Toolbox-site
 
-## Installation locale (Linux / Mac)
+## Installation
 
-- Créer un dossier ObTIC-Toolbox et ouvrir un terminal dans celui-ci.
+## Via docker
+1. Veillez à avoir docher et docker-compose installés sur votre machine. Pour se faire, veuillez suivre les instructions sur le site officiel de docker : https://docs.docker.com/engine/install/ et suivre les instructions pour votre système d'exploitation.
 
-- Cloner le répertoire Toobox-site :
+2. Clonez le répertoire actuel sur votre machine en utilisant la commande suivante : 
+```bash
+git clone https://github.com/obtic-scai/Toolbox-site.git
+```
 
-`git clone https://github.com/obtic-scai/Toolbox-site.git`
+2. (bis) Vous pouvez également télécharger le fichier `docker-compose.yml` directement depuis le site github et le placer dans un dossier de votre choix (de préférence vide et nommé `EPIMETHEE` pour éviter les conflits de noms de dockers).
 
-- Créer et activer un environnement virtuel (Python 3.6 et au-dessus) :
+3. Placez-vous dans le répertoire `EPIMETHEE` et lancez la commande suivante pour démarrer les dockers : 
+```bash
+docker-compose up -d
+```
+Il est possible que vous ayez besoin de droits d'administrateur pour lancer cette commande. Dans ce cas, ajoutez `sudo` devant la commande.
+Une fois cette commande lancée, les dockers se téléchargeront et se lanceront automatiquement. Vous pourrez accéder à l'interface de la toolbox en vous rendant à l'adresse http://localhost:8080 dans votre navigateur.
 
-`python3 -m venv toolbox-env`
+4. Pour arrêter les dockers, placez-vous dans le répertoire `EPIMETHEE` et lancez la commande suivante : 
+```bash
+docker-compose down
+```
+Il est possible que vous ayez besoin de droits d'administrateur pour lancer cette commande. Dans ce cas, ajoutez `sudo` devant la commande.
 
-`source toolbox-env/bin/activate`
+### Mise à jour de l'application
 
-- Se placer dans le répertoire Toolbox-site :
+Pour mettre à jour l'application, il suffit de se placer dans le répertoire `EPIMETHEE` et de lancer la commande suivante : 
+```bash
+docker-compose pull
+```
+Il est possible que vous ayez besoin de droits d'administrateur pour lancer cette commande. Dans ce cas, ajoutez `sudo` devant la commande.
 
-`cd Toolbox-site`
+Puis relancez les dockers avec la commande `docker-compose up -d` (toujours dans le répertoire `EPIMETHEE` et en ayant les droits d'administrateur si nécessaire).
 
-- Installer les paquets nécessaires à l'exécution de l'application :
 
-`pip install -r requirements.txt`
+### Installation manuelle (non recommandée) pour linux et mac
 
-Il est également nécessaire de [télécharger le paquet Swig](https://sourceforge.net/projects/swig/files/swig/swig-3.0.12/swig-3.0.12.tar.gz/download?use_mirror=netix). Pour l'installer, lancer :
+1. Installez les paquets nécessaires à l'exécution de l'application :
 
-`./swig-3.0.12/configure && make && sudo make install`
+```bash
+sudo apt-get install git python3.10 python3.10-venv python3.10-pip tesseract-ocr tesseract-ocr-fra tesseract-ocr-eng tesseract-ocr-osd poppler-utils
+```
+
+2. Clonez le répertoire Toobox-site :
+
+```bash
+git clone https://github.com/obtic-scai/Toolbox-site.git
+```
+et placez-vous dans le répertoire Toolbox-site :
+
+```bash
+cd Toolbox-site
+```
+
+3. Créez et activez un environnement virtuel pour Python 3.10 :
+
+```bash
+python3.10 -m venv venv
+source venv/bin/activate
+```
+
+5. Installez les paquets Python nécessaires à l'exécution de l'application :
+
+```bash
+pip install -r requirements.txt
+```
+
 
 ### Lancer l'application
 
-Placé dans le dossier Toolbox-site, lancer la commande :
+Placé dans le dossier Toolbox-site, activez l'environnement virtuel :
+```bash
+source venv/bin/activate
+```
+
+Puis lancez l'application :
 
 ```bash
 python toolbox_app.py
 ```
 
-Ouvrir le lien http://127.0.0.1:5000 dans un navigateur pour accéder à l'interface de la Toolbox ObTIC.
+Ouvrir le lien http://localhost:8080 dans un navigateur pour accéder à l'interface de la Toolbox ObTIC.
 
 ## Version en ligne
 
