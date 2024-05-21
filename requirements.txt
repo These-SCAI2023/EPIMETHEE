@@ -1,12 +1,20 @@
+spacy==3.7.4
+fr_core_news_sm @https://github.com/explosion/spacy-models/releases/download/fr_core_news_sm-3.7.0/fr_core_news_sm-3.7.0-py3-none-any.whl
+fr_core_news_md @https://github.com/explosion/spacy-models/releases/download/fr_core_news_md-3.7.0/fr_core_news_md-3.7.0-py3-none-any.whl
+fr_core_news_lg @https://github.com/explosion/spacy-models/releases/download/fr_core_news_lg-3.7.0/fr_core_news_lg-3.7.0-py3-none-any.whl
+
+scipy==1.10.1
+flair
+
 lxml
 pandas
-spacy
+
 Flask
 Flask-WTF
 flask-babel
+
 Werkzeug
 geopy
 beautifulsoup4
 scikit-learn
-flair
-
+redis
