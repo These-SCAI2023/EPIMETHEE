@@ -1,5 +1,11 @@
 # Épiméthée dans Pandore (Toolbox-site ObTIC)
 
+Pour installer localement Épiméthée rendez-vous sur la branche "docker"
+
+```bash
+git chekout docker
+```
+
 ## Installation
 
 ## Via docker
