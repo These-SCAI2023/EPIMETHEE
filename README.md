@@ -95,9 +95,7 @@ ____
 
 # Bibliographie
 
-Motasem ALRAHABI, Valentina FEDCHENKO, Ljudmila PETKOVIC, Glenn ROE. Pandore: a toolbox for digital humanities text-based workflows. [soumission acceptée [DH2023](https://dh2023.adho.org/?page_id=390)]
-
-Johanna Cordova, Yoann Dupont, Ljudmila Petkovic, James Gawley, Motasem Alrahabi, et al.. Toolbox : une chaîne de traitement de corpus pour les humanités numériques. *Traitement Automatique des Langues Naturelles*, 2022, Avignon, France. pp.11-13. ⟨[hal-03701464](https://hal.archives-ouvertes.fr/TALN-RECITAL2022/hal-03701464)⟩
+Koudoro-Parfait, C., Alrahabi, M., Dupont, Y., Lejeune, G., & Roe, G. (2023, juin 30). Mapping spatial named entities from noisy OCR output: Epimetheus from OCR to map. Digital Humanities 2023. Collaboration as Opportunity (DH2023), Graz, Austria. https://doi.org/10.5281/zenodo.8108050
 
 
 # Mentions légales
