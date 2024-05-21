@@ -6,13 +6,25 @@ import glob
 from io import StringIO
 import shutil
 import re
+from pathlib import Path
 
 from werkzeug.utils import secure_filename
 
-def tesseract_to_txt(uploaded_files, model, rand_name, ROOT_FOLDER, UPLOAD_FOLDER):
+def tesseract_to_txt(
+        uploaded_files,
+        model,
+        rand_name,
+        ROOT_FOLDER: str | Path,
+        UPLOAD_FOLDER
+):
     # Nom de dossier aléatoire pour le résultat de la requête
-    result_path = ROOT_FOLDER / os.path.join(UPLOAD_FOLDER, rand_name)
-    os.mkdir(result_path)
+    if isinstance(ROOT_FOLDER, str):
+        ROOT_FOLDER = Path(ROOT_FOLDER)
+    elif not isinstance(ROOT_FOLDER, Path):
+        raise TypeError("ROOT_FOLDER doit être un str ou un Path")
+
+    result_path = ROOT_FOLDER / UPLOAD_FOLDER / rand_name
+    result_path.mkdir(exist_ok=True, parents=True)
 
     # Répertoire de travail pour les fichiers pdf
     directory_path = ''
@@ -30,14 +42,11 @@ def tesseract_to_txt(uploaded_files, model, rand_name, ROOT_FOLDER, UPLOAD_FOLDE
         if file_extension.lower() == ".pdf":
             # Créer un dossier pour stocker l'ensemble des images
             directory = filename + '_temp'
-            directory_path = ROOT_FOLDER / os.path.join(UPLOAD_FOLDER, directory)
-            try:
-                os.mkdir(directory_path)
-            except FileExistsError:
-                pass
+            directory_path = ROOT_FOLDER / UPLOAD_FOLDER / directory
+            directory_path.mkdir(exist_ok=True, parents=True)
 
             # Sauvegarde du PDF
-            path_to_file = ROOT_FOLDER / os.path.join(directory_path, secure_filename(f.filename))
+            path_to_file = directory_path / secure_filename(f.filename)
             f.save(path_to_file)
 
             # Conversion en PNG
