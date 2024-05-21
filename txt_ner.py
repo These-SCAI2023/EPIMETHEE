@@ -11,8 +11,8 @@ import csv
 
 import spacy
 
-#from flair.data import Sentence as FlairSentence
-#from flair.models import SequenceTagger
+from flair.models import SequenceTagger
+from flair.data import Sentence as FlairSentence
 
 
 def flair_annotate(sentence, modele):
@@ -35,7 +35,6 @@ def spacy_iterate(doc):
     for entity in doc.ents:
         yield (entity.label_, entity.start_char, entity.end_char)
 
-
 def flair_iterate(doc):
     for entity in doc.get_spans('ner'):
         try:
@@ -46,7 +45,7 @@ def flair_iterate(doc):
 
 loaders = {
     "spacy": spacy.load,
-    # "flair": SequenceTagger.load,
+    "flair": SequenceTagger.load,
 }
 
 entity_iterators = {
