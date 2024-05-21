@@ -82,13 +82,16 @@ def set_language(language=None):
 	session['language'] = language
 	return redirect(url_for('index'))
 
-#-----------------------------------------------------------------
+
+# -----------------------------------------------------------------
 # ROUTES
-#-----------------------------------------------------------------
+# -----------------------------------------------------------------
 @app.route('/')
 @app.route('/index')
-def index():
-	return render_template('index.html')
+@app.route('/ocr_map')
+def ocr_map():
+    form = FlaskForm()
+    return render_template('ocr_map.html', form=form)
 
 @app.route('/pandore')
 def pandore():
