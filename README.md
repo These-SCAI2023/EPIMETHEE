@@ -7,7 +7,7 @@
 
 2. Clonez le répertoire actuel sur votre machine en utilisant la commande suivante : 
 ```bash
-git clone https://github.com/obtic-scai/Toolbox-site.git
+git clone https://github.com/These-SCAI2023/EPIMETHEE.git -b docker
 ```
 
 2. (bis) Vous pouvez également télécharger le fichier `docker-compose.yml` directement depuis le site github et le placer dans un dossier de votre choix (de préférence vide et nommé `EPIMETHEE` pour éviter les conflits de noms de dockers).
@@ -44,15 +44,15 @@ Puis relancez les dockers avec la commande `docker-compose up -d` (toujours dans
 sudo apt-get install git python3.10 python3.10-venv python3.10-pip tesseract-ocr tesseract-ocr-fra tesseract-ocr-eng tesseract-ocr-osd poppler-utils
 ```
 
-2. Clonez le répertoire Toobox-site :
+2. Clonez le répertoire EPIMETHEE :
 
 ```bash
-git clone https://github.com/obtic-scai/Toolbox-site.git
+git clone https://github.com/These-SCAI2023/EPIMETHEE.git
 ```
-et placez-vous dans le répertoire Toolbox-site :
+et placez-vous dans le répertoire EPIMETHEE :
 
 ```bash
-cd Toolbox-site
+cd EPIMETHEE
 ```
 
 3. Créez et activez un environnement virtuel pour Python 3.10 :
