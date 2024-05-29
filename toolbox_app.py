@@ -473,7 +473,7 @@ def nermap_to_csv2():
 
     keys = ["nom", "latitude", "longitude", "outil", "cluster"]
     output_stream = StringIO()
-    writer = csv.DictWriter(output_stream, fieldnames=keys, delimiter="\t")
+    writer = csv.DictWriter(output_stream, fieldnames=keys, delimiter=",")
     writer.writeheader()
 
     input_json = json.loads(request.data)

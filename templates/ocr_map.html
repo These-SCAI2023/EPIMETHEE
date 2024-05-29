@@ -587,7 +587,7 @@
                     let data_export = "data:text/csv;charset=utf-8," + encodeURIComponent(response);
                     let downloadAnchorNode = document.createElement('a');
                     downloadAnchorNode.setAttribute("href", data_export);
-                    downloadAnchorNode.setAttribute("download", "ner2map-clusters.tsv");
+                    downloadAnchorNode.setAttribute("download", "ner2map-clusters.csv");
                     document.body.appendChild(downloadAnchorNode);
                     downloadAnchorNode.click();
                     downloadAnchorNode.remove();
