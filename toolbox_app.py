@@ -491,6 +491,7 @@ def nermap_to_csv2():
         for item in list(toolnode):
             tool = item.text.strip()
             for centroid_node in list(list(item)[0]):
+                print(centroid_node)
                 centroid = etree.tostring(next(centroid_node.iterfind("div")), method="text", encoding=str).strip()
                 # centroid = centroid_node.text_content().strip()
                 try:
