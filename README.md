@@ -42,7 +42,7 @@ Il est possible que vous ayez besoin de droits d'administrateur pour lancer cett
 Puis relancez les dockers avec la commande `docker-compose up -d` (toujours dans le répertoire `EPIMETHEE` et en ayant les droits d'administrateur si nécessaire).
 
 
-### Installation manuelle (non recommandée) pour linux et mac
+### Installation manuelle pour linux et mac (non recommandée)
 
 1. Installez les paquets nécessaires à l'exécution de l'application :
 
