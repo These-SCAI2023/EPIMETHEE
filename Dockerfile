@@ -31,10 +31,13 @@ RUN export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib/openblas/lib/
 COPY . ./app/
 WORKDIR /app/
 
+RUN if [ -e pip.conf ]; then cp pip.conf /etc/pip.conf; fi
+
 RUN --mount=type=cache,target=/root/.cache/pip pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 
 RUN --mount=type=cache,target=/root/.cache/pip \
-    pip install -r requirements.txt
+    if [ -e pip.conf ]; then INSTALL_OPTIONS="--index-url http://192.168.2.201:9191/index/"; fi; \
+    pip install -r requirements.txt $INSTALL_OPTIONS
 
 RUN apt remove -y $list_of_packages &&  \
     apt install -y tesseract-ocr tesseract-ocr-fra tesseract-ocr-eng tesseract-ocr-osd poppler-utils && \
