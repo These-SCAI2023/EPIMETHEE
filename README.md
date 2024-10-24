@@ -1,19 +1,13 @@
 # Épiméthée dans Pandore (Toolbox-site ObTIC)
 
-Pour installer localement Épiméthée rendez-vous sur la branche "docker"
-
-```bash
-git chekout docker
-```
-
 ## Installation
 
 ## Via docker
-1. Veillez à avoir docher et docker-compose installés sur votre machine. Pour se faire, veuillez suivre les instructions sur le site officiel de docker : https://docs.docker.com/engine/install/ et suivre les instructions pour votre système d'exploitation.
+1. Veillez à avoir docker et docker-compose installés sur votre machine. Pour se faire, veuillez suivre les instructions sur le site officiel de docker : https://docs.docker.com/engine/install/ et suivre les instructions pour votre système d'exploitation.
 
 2. Clonez le répertoire actuel sur votre machine en utilisant la commande suivante : 
 ```bash
-git clone https://github.com/These-SCAI2023/EPIMETHEE.git -b docker
+git clone https://github.com/These-SCAI2023/EPIMETHEE.git
 ```
 
 2. (bis) Vous pouvez également télécharger le fichier `docker-compose.yml` directement depuis le site github et le placer dans un dossier de votre choix (de préférence vide et nommé `EPIMETHEE` pour éviter les conflits de noms de dockers).
@@ -42,7 +36,7 @@ Il est possible que vous ayez besoin de droits d'administrateur pour lancer cett
 Puis relancez les dockers avec la commande `docker-compose up -d` (toujours dans le répertoire `EPIMETHEE` et en ayant les droits d'administrateur si nécessaire).
 
 
-### Installation manuelle pour linux et mac (non recommandée)
+### Installation manuelle (non recommandée) pour linux et mac
 
 1. Installez les paquets nécessaires à l'exécution de l'application :
 

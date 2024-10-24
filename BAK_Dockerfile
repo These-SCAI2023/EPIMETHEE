@@ -1,0 +1,36 @@
+# syntax = docker/dockerfile:experimental
+
+# Use an official Python runtime based on Alpine as a parent image
+FROM python:3.12-alpine
+
+COPY . ./app/
+WORKDIR /app/
+
+RUN apk update && apk upgrade && apk add --virtual .build-deps  \
+    build-base alpine-sdk linux-headers wget \
+    gcc python3-dev cppunit-dev gfortran perl \
+    musl-dev libffi-dev openssl-dev libxml2-dev libxslt-dev freetype-dev libpng-dev openblas-dev
+
+RUN wget https://github.com/OpenMathLib/OpenBLAS/releases/download/v0.3.27/OpenBLAS-0.3.27.tar.gz \
+	&& tar -xf OpenBLAS-0.3.27.tar.gz \
+	&& cd OpenBLAS-0.3.27 \
+	&& make BINARY=64 FC=$(which gfortran) USE_THREAD=1 \
+	&& make PREFIX=/usr/lib/openblas install
+
+RUN --mount=type=cache,target=/root/.cache/pip \
+    ATLAS=/usr/lib/openblas/lib/libopenblas.so LAPACK=/usr/lib/openblas/lib/libopenblas.so pip install scipy
+
+RUN export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib/openblas/lib/
+
+RUN apk add py3-numpy py3-scipy py3-matplotlib py3-pandas py3-nose py3-scikit-learn
+
+# Install any needed packages specified in requirements.txt
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install --no-cache-dir -r requirements.txt
+
+RUN apk del .build-deps
+
+EXPOSE 5000
+
+# Run app.py when the container launches
+CMD ["python", "toolbox_app.py"]

@@ -1,184 +1,262 @@
-{% extends "index.html" %}
-{% block header %} {{ super() }} {% endblock %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
 
+    <meta charset="utf-8">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">-->
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/leaflet.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css"></link>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"></link>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+    <title>Miroir Épiméthée</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+          integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/loader.css') }}">
+    <script src="{{ url_for('static', filename='js/loader.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+            integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster-src.js"></script>
+
+</head>
+{% block header %}
+    <div class="logo">
+        <a href="{{ url_for('ocr_map') }}"><img alt="ObTIC"
+                                                src="{{ url_for('static', filename='img/ObTIC-logo-white.png') }}"/>
+            <h1 style="font-family:'Comprehension', serif;">Pandore toolbox</h1></a>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('projet') }}" id="menu_projet">{{ _('Projet') }}</a></li>
+                <li><a href="{{ url_for('documentation') }}">{{ _('Documentation') }}</a></li>
+                <li><a href="{{ url_for('contact') }}">{{ _('Contact') }}</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="spacer">
+        &nbsp;
+    </div>
+
+{% endblock %}
 {% block content %}
-<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-<style>
-/* Grille CSS */
-.parent {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  grid-template-rows: 1fr;
-  margin-left:-100px;
-  grid-gap: 25px;
-  width:150%;
-  }
-.col_1{
-  grid-column: 1;
-}
-.col_2{
-  grid-column: 2;
-}
-</style>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <style>
+        /* Grille CSS */
+        .parent {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            grid-template-rows: 1fr;
+            margin-left: -100px;
+            grid-gap: 25px;
+            width: 150%;
+        }
+
+        .col_1 {
+            grid-column: 1;
+        }
+
+        .col_2 {
+            grid-column: 2;
+        }
+    </style>
 
 
 
-<style>
-    /* The Modal (background) */
-    .modal {
-      display: none; /* Hidden by default */
-      position: fixed; /* Stay in place */
-      z-index: 1000; /* Sit on top */
-      right: 0;
-      top: 0;
-      width: 90%; /* Full width */
-      height: 100%; /* Full height */
-      overflow: auto; /* Enable scroll if needed */
-      background-color: rgb(0,0,0); /* Fallback color */
-      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    }
-    
-    /* Modal Content/Box */
-    .modal-content {
-      background-color: #fefefe;
-      margin: 15% auto; /* 15% from the top and centered */
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%; /* Could be more or less, depending on screen size */
-    }
-    
-    /* The Close Button */
-    .close {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-    }
-    
-    .close:hover,
-    .close:focus {
-      color: black;
-      text-decoration: none;
-      cursor: pointer;
-    }
-            </style>
+    <style>
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            right: 0;
+            top: 0;
+            width: 90%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0); /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+        }
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nestablejs@latest/dist/nestable.css">
-<script src="https://cdn.jsdelivr.net/npm/nestablejs@latest/dist/nestable.js"></script>
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+        }
 
+        /* The Close Button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
 
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
 
-<div class="outil">
-
-  <h3>Épiméthée</h3>
-
-  <div class="parent">
-    <div class="col_1">
-
-<!-- see: https://www.w3schools.com/howto/howto_css_modals.asp -->
-<div id="modal-clusters" class="modal">
-  <div class="modal-content">
-    <span id="clusters-close">&times;</span>
-    <p>Some text in the Modal..</p>
-    <div id="cluster-checkboxes"></div>
-  </div>
-</div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nestablejs@latest/dist/nestable.css">
+    <script src="https://cdn.jsdelivr.net/npm/nestablejs@latest/dist/nestable.js"></script>
 
 
 
-    <p>Cette chaîne de traitement permet d'analyser les entités nommées de lieu dans un texte (numérisé ou non) et de cartographier ces lieux. Cette chaîne se base sur les trois outils suivants:</p>
-    <ul style="padding-left: 10%;">
-        <li>Tesseract</li>
-        <li>SpaCy</li>
-        <li>geopy</li>
-    </ul>
+    <div class="outil">
 
-    <p>Formats possibles pour les fichiers à OCRiser : PNG, JPG, TIFF, PDF.</p>
-    <p>Formats possibles pour les textes bruts : TXT.</p>
-    <div id="tess-form">
-        <form id="ocrmap-form" method="post" enctype="multipart/form-data" onsubmit="showloader('tessloader')">
-          {{ form.csrf_token }}
-      <fieldset>
-        <legend>Tesseract</legend>
-          <label for="model">Modèle</label>
-          <select name="tessmodel" id="tessmodel">
-            <option value="raw_text">Pas de numérisation</option>
-            <option value="fra">Français (fra)</option>
-            <option value="eng">Anglais (eng)</option>
-            <option value="frk">Fraktur (frk)</option>
-            <option value="spa_old">Espagnol ancien (spa_old)</option>
-          </select>
-      </fieldset>
+        <h3>Épiméthée</h3>
 
-      <fieldset>
-          <legend>Configuration NER</legend>
-          <label for="encodage" style="display:inline-block;width:110px;">Encodage</label>
-          <input type="text" name="encodage" id="encodage" value="UTF-8" required>
-          <fieldset>
-              <legend>Configuration outil 1</legend>
-              <label for="moteur_REN1" style="display:inline-block;width:110px;">Moteur de REN</label>
-              <select name="moteur_REN1" id="moteur_REN1" onchange="detectChangeMoteur1(this)">
-              <option value="spacy" selected="true">SpaCy</option>
-              <option value="flair">Flair</option>
-              </select>
-              <br />
-              <label for="modele_REN1" style="display:inline-block;width:110px;">Modèle à utiliser</label>
-              <select name="modele_REN1" id="modele_REN1">
-              <option value="fr_core_news_sm">fr_core_news_sm</option>
-              <option value="fr_core_news_md">fr_core_news_md</option>
-              <option value="fr_core_news_lg" selected="true">fr_core_news_lg</option>
-              </select>
-              <br />
-          </fieldset>
-          <fieldset>
-              <legend>Configuration outil 2</legend>
-              <label for="moteur_REN2" style="display:inline-block;width:110px;">Moteur de REN</label>
-              <select name="moteur_REN2" id="moteur_REN2" onchange="detectChangeMoteur2(this)">
-              <option value="aucun" selected="true">aucun</option>
-              <option value="spacy">SpaCy</option>
-              <option value="flair">Flair</option>
-              </select>
-              <br />
-              <label for="modele_REN2" style="display:inline-block;width:110px;">Modèle à utiliser</label>
-              <select name="modele_REN2" id="modele_REN2">
-              <option value="aucun" selected="true">aucun</option>
-              </select>
-              <br />
-          </fieldset>
-      </fieldset>
+        <div class="parent">
+            <div class="col_1">
 
-      <fieldset>
-        <legend>Entrée</legend>
-        <input type="file" name="inputfiles" accept="image/jpeg,image/png,application/pdf,image/tif,image/tiff,text/plain" multiple
-          required />
-        <br />
-      </fieldset>
-      <input id="csrf_token" name="csrf_token" type="hidden" value="CSRF_TOKEN_STRING">
-      <button id="ocrmap-button" style="display:block;margin:auto;margin-bottom:5px;">Cartographier</button>
-      <!-- <button id="ocrmap-csv" style="display:block;margin:auto;margin-bottom:50px;">Télécharger</button> -->
-      <!-- <button id="ocrmap-showclusters" style="display:block;margin:auto;margin-bottom:50px;">Afficher les clusters</button> -->
-      <button id="ocrmap-sortedclusters" style="display:block;margin:auto;margin-bottom:5px;">Télécharger les clusters triés</button>
-      </form>
-      <!-- Loader -->
-      <div class="loader">
-        <p>Traitement en cours...</p>
-        <div class="loadingio-spinner-ball-205vl2x7f7n">
-          <div class="ldio-b8p5li8dt1u">
-            <div></div>
-          </div>
+                <!-- see: https://www.w3schools.com/howto/howto_css_modals.asp -->
+                <div id="modal-clusters" class="modal">
+                    <div class="modal-content">
+                        <span id="clusters-close">&times;</span>
+                        <p>Some text in the Modal..</p>
+                        <div id="cluster-checkboxes"></div>
+                    </div>
+                </div>
+
+
+                <p>Cette chaîne de traitement permet d'analyser les entités nommées de lieu dans un texte (numérisé ou
+                    non) et de cartographier ces lieux. Cette chaîne se base sur les trois outils suivants:</p>
+                <ul style="padding-left: 10%;">
+                    <li>Tesseract</li>
+                    <li>SpaCy</li>
+                    <li>geopy</li>
+                </ul>
+
+                <p>Formats possibles pour les fichiers à OCRiser : PNG, JPG, TIFF, PDF.</p>
+                <p>Formats possibles pour les textes bruts : TXT.</p>
+
+                <p>La chaîne de traitement peut prendre un certain temps en fonction de la taille des fichiers et du
+                    nombre de fichiers à traiter.
+                    La carte générée nécessite de télécharger les emplacements des entités nommées de lieu pour être
+                    affichée.</p>
+                <div id="tess-form">
+                    <form id="ocrmap-form" method="post" enctype="multipart/form-data"
+                          onsubmit="showloader('tessloader')">
+                        {{ form.csrf_token }}
+                        <fieldset>
+                            <legend>Tesseract</legend>
+                            <label for="model">Modèle</label>
+                            <select name="tessmodel" id="tessmodel">
+                                <option value="raw_text">Pas de numérisation</option>
+                                <option value="fra">Français (fra)</option>
+                                <option value="eng">Anglais (eng)</option>
+                                <option value="frk">Fraktur (frk)</option>
+                                <option value="spa_old">Espagnol ancien (spa_old)</option>
+                            </select>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Configuration NER</legend>
+                            <label for="encodage" style="display:inline-block;width:110px;">Encodage</label>
+                            <input type="text" name="encodage" id="encodage" value="UTF-8" required>
+                            <fieldset>
+                                <legend>Configuration outil 1</legend>
+                                <label for="moteur_REN1" style="display:inline-block;width:110px;">Moteur de REN</label>
+                                <select name="moteur_REN1" id="moteur_REN1" onchange="detectChangeMoteur1(this)">
+                                    <option value="spacy" selected="true">SpaCy</option>
+                                    <option value="flair">Flair</option>
+                                </select>
+                                <br/>
+                                <label for="modele_REN1" style="display:inline-block;width:110px;">Modèle à
+                                    utiliser</label>
+                                <select name="modele_REN1" id="modele_REN1">
+                                    <option value="fr_core_news_sm">fr_core_news_sm</option>
+                                    <option value="fr_core_news_md">fr_core_news_md</option>
+                                    <option value="fr_core_news_lg" selected="true">fr_core_news_lg</option>
+
+                                    <option value="pt_core_news_sm">pt_core_news_sm</option>
+                                    <option value="pt_core_news_md">pt_core_news_md</option>
+                                    <option value="pt_core_news_lg">pt_core_news_lg</option>
+
+                                    <option value="en_core_web_sm">en_core_web_sm</option>
+                                    <option value="en_core_web_md">en_core_web_md</option>
+                                    <option value="en_core_web_lg">en_core_web_lg</option>
+                                </select>
+                                <br/>
+                            </fieldset>
+                            <fieldset>
+                                <legend>Configuration outil 2</legend>
+                                <label for="moteur_REN2" style="display:inline-block;width:110px;">Moteur de REN</label>
+                                <select name="moteur_REN2" id="moteur_REN2" onchange="detectChangeMoteur2(this)">
+                                    <option value="aucun" selected="true">aucun</option>
+                                    <option value="spacy">SpaCy</option>
+                                    <option value="flair">Flair</option>
+                                </select>
+                                <br/>
+                                <label for="modele_REN2" style="display:inline-block;width:110px;">Modèle à
+                                    utiliser</label>
+                                <select name="modele_REN2" id="modele_REN2">
+                                    <option value="aucun" selected="true">aucun</option>
+                                </select>
+                                <br/>
+                            </fieldset>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Entrée</legend>
+                            <input type="file" name="inputfiles"
+                                   accept="image/jpeg,image/png,application/pdf,image/tif,image/tiff,text/plain"
+                                   multiple
+                                   required/>
+                            <br/>
+                        </fieldset>
+                        <input id="csrf_token" name="csrf_token" type="hidden" value="CSRF_TOKEN_STRING">
+                        <button id="ocrmap-button" style="display:block;margin:auto;margin-bottom:5px;">Cartographier
+                        </button>
+                        <!-- <button id="ocrmap-csv" style="display:block;margin:auto;margin-bottom:50px;">Télécharger</button> -->
+                        <!-- <button id="ocrmap-showclusters" style="display:block;margin:auto;margin-bottom:50px;">Afficher les clusters</button> -->
+                        <button id="ocrmap-sortedclusters" style="display:block;margin:auto;margin-bottom:5px;">
+                            Télécharger les clusters triés
+                        </button>
+                    </form>
+                    <!-- Loader -->
+                    <div class="loader">
+                        <p>Traitement en cours...</p>
+                        <div class="loadingio-spinner-ball-205vl2x7f7n">
+                            <div class="ldio-b8p5li8dt1u">
+                                <div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end div loader-->
+                </div>
+            </div><!-- end div col_1-->
+            <div class="col_2">
+                <div id="map" style="height:60vh; width:45vw;display:inline-block;"></div>
+                <div id="clusters" style="height:60vh; width:45vw;display:inline-block;"></div>
+            </div>
         </div>
-      </div>
-      <!--end div loader-->
     </div>
-    </div><!-- end div col_1-->
-    <div class="col_2">
-        <div id="map" style="height:60vh; width:45vw;display:inline-block;"></div>
-        <div id="clusters" style="height:60vh; width:45vw;display:inline-block;"></div>
-    </div>
-  </div>
-</div>
 
-
+    {% block footer %}
+        <div class="footer">
+            <p><a href="https://github.com/obtic-scai/Toolbox-site"><i class="fa-brands fa-github"></i> Code source</a>
+            </p>
+            <p>Site développé par l'équipe ObTIC et hébergé par Sorbonne Université. Ce site ne dépose pas de
+                cookies.</p>
+            <p>© 2022-2023 <a href="https://obtic.sorbonne-universite.fr/" target="_blank">ObTIC</a></p>
+        </div>
+    {% endblock %}
 
 
     <script>
@@ -191,31 +269,31 @@
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 18,
             attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-            '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-            'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+                '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                'Imagery © <a href="http://mapbox.com">Mapbox</a>',
             id: 'mapbox.streets'
         }).addTo(map);
         var layerControl = L.control.layers({}, {}).addTo(map); // L.control.layers(layers, overlays)
         var layer_groups = {
-            "commun" : null,
-            "outil 1" : null,
-            "outil 2" : null
+            "commun": null,
+            "outil 1": null,
+            "outil 2": null
         };
         var mapped_ner_tools = [];
     </script>
 
 
     <script type="text/javascript">
-    /* Gère les tokens CSRF à chaque requête */
-          var csrf_token = "{{ csrf_token() }}";
+        /* Gère les tokens CSRF à chaque requête */
+        var csrf_token = "{{ csrf_token() }}";
 
-          $.ajaxSetup({
-              beforeSend: function(xhr, settings) {
-                  if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
-                      xhr.setRequestHeader("X-CSRFToken", csrf_token);
-                  }
-              }
-          });
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrf_token);
+                }
+            }
+        });
     </script>
 
 
@@ -240,9 +318,9 @@
                 }
             }
             layer_groups = {
-                "commun" : null,
-                "outil 1" : null,
-                "outil 2" : null
+                "commun": null,
+                "outil 1": null,
+                "outil 2": null
             }
 
             layerControl.remove(map);
@@ -295,7 +373,7 @@
                     let forms = cluster[cluster.length - 1];
                     innerHTML += "<li>" + nom;// + " / " + cluster[0] + "," + cluster[1];
                     innerHTML += '<ol>';
-                    for(const [form, coords, freq] of forms) {
+                    for (const [form, coords, freq] of forms) {
                         innerHTML += '<li>' + form + '</li>';// + ' / ' + coords + '</li>';
                     }
                     innerHTML += "</ol>";
@@ -351,71 +429,71 @@
     </script>
 
     <script type="text/javascript">
-      var blueIcon = new L.Icon({
-	iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
-	shadowUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-shadow.png',
-	iconSize: [25, 41],
-	iconAnchor: [12, 41],
-	popupAnchor: [1, -34],
-	shadowSize: [41, 41]
-});
+        var blueIcon = new L.Icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+            shadowUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
 
-var redIcon = new L.Icon({
-	iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-	shadowUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-shadow.png',
-	iconSize: [25, 41],
-	iconAnchor: [12, 41],
-	popupAnchor: [1, -34],
-	shadowSize: [41, 41]
-});
+        var redIcon = new L.Icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+            shadowUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
 
-var violetIcon = new L.Icon({
-	iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png',
-	shadowUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-shadow.png',
-	iconSize: [25, 41],
-	iconAnchor: [12, 41],
-	popupAnchor: [1, -34],
-	shadowSize: [41, 41]
-});
-var intersection_icon = {
-    "commun" : violetIcon,
-    "outil 1" : redIcon,
-    "outil 2" : blueIcon
-}
-var icons = [redIcon, blueIcon];
+        var violetIcon = new L.Icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png',
+            shadowUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
+        var intersection_icon = {
+            "commun": violetIcon,
+            "outil 1": redIcon,
+            "outil 2": blueIcon
+        }
+        var icons = [redIcon, blueIcon];
     </script>
 
     <script type="text/javascript">
-      var TMP_PASDINSPI = null;
+        var TMP_PASDINSPI = null;
 
-      const ocrmap_button = document.querySelector('#ocrmap-button');
-      ocrmap_button.onclick = (event) => {
-          event.preventDefault();
-          $(".loader").css("display", "block");
-          var form_data = new FormData($('#ocrmap-form').get(0));
-          $.ajax({
-            type: 'POST',
-            url: "{{ url_for('run_ocr_map_intersection') }}",
-            data: form_data,
-            processData: false,
-            contentType: false,
-            success: function (response) {
-              event.preventDefault();
-              TMP_PASDINSPI = response;
-              updateOverlays(response);
-              updateModal(response);
-              $(".loader").css("display", "none");
-            //~ if (response.points.length > 0) {
-                //~ updatePoints(response.points);
-            //~ } else {
-                //~ alert("Aucun lieu trouvé / aucun lieu trouvé dans la base");
-            //~ }
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-            alert(textStatus + "\n" + "status: "+XMLHttpRequest.status + "\n" + "message: "+errorThrown);
-        }
-    });
-};
+        const ocrmap_button = document.querySelector('#ocrmap-button');
+        ocrmap_button.onclick = (event) => {
+            event.preventDefault();
+            $(".loader").css("display", "block");
+            var form_data = new FormData($('#ocrmap-form').get(0));
+            $.ajax({
+                type: 'POST',
+                url: "{{ url_for('run_ocr_map_intersection') }}",
+                data: form_data,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    event.preventDefault();
+                    TMP_PASDINSPI = response;
+                    updateOverlays(response);
+                    updateModal(response);
+                    $(".loader").css("display", "none");
+                    //~ if (response.points.length > 0) {
+                    //~ updatePoints(response.points);
+                    //~ } else {
+                    //~ alert("Aucun lieu trouvé / aucun lieu trouvé dans la base");
+                    //~ }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(textStatus + "\n" + "status: " + XMLHttpRequest.status + "\n" + "message: " + errorThrown);
+                }
+            });
+        };
     </script>
 
     <!--
@@ -446,83 +524,83 @@ var icons = [redIcon, blueIcon];
     </script>
     -->
 
-<script type="text/javascript">
-  function detectChangeMoteur1(moteurREN) {
-      var modeleREN = document.getElementById("modele_REN1");
-      if (moteurREN.value === "spacy") {
-          modeleREN.innerHTML = `
+    <script type="text/javascript">
+        function detectChangeMoteur1(moteurREN) {
+            var modeleREN = document.getElementById("modele_REN1");
+            if (moteurREN.value === "spacy") {
+                modeleREN.innerHTML = `
           <option value="fr_core_news_sm">fr_core_news_sm</option>
           <option value="fr_core_news_md">fr_core_news_md</option>
           <option value="fr_core_news_lg" selected="true">fr_core_news_lg</option>`;
-      } else if (moteurREN.value === "flair") {
-          modeleREN.innerHTML = '<option value="flair/ner-french" selected="true">flair/ner-french</option>';
-      }
-  }
+            } else if (moteurREN.value === "flair") {
+                modeleREN.innerHTML = '<option value="flair/ner-french" selected="true">flair/ner-french</option>';
+            }
+        }
 
-  function detectChangeMoteur2(moteurREN) {
-      var modeleREN = document.getElementById("modele_REN2");
-      if (moteurREN.value === "spacy") {
-          modeleREN.innerHTML = `
+        function detectChangeMoteur2(moteurREN) {
+            var modeleREN = document.getElementById("modele_REN2");
+            if (moteurREN.value === "spacy") {
+                modeleREN.innerHTML = `
           <option value="fr_core_news_sm">fr_core_news_sm</option>
           <option value="fr_core_news_md">fr_core_news_md</option>
           <option value="fr_core_news_lg" selected="true">fr_core_news_lg</option>`;
-      } else if (moteurREN.value === "flair") {
-          modeleREN.innerHTML = '<option value="flair/ner-french" selected="true">flair/ner-french</option>';
-      } else if (moteurREN.value === "aucun") {
-          modeleREN.innerHTML = '<option value="aucun" selected="true">aucun</option>';
-      }
-  }
-  </script>
+            } else if (moteurREN.value === "flair") {
+                modeleREN.innerHTML = '<option value="flair/ner-french" selected="true">flair/ner-french</option>';
+            } else if (moteurREN.value === "aucun") {
+                modeleREN.innerHTML = '<option value="aucun" selected="true">aucun</option>';
+            }
+        }
+    </script>
 
-<!-- <script>
-    var modal = document.getElementById('modal-clusters');
-    const clusters_button = document.getElementById('ocrmap-showclusters');
-    // Get the <span> element that closes the modal
-    var clusters_close_button = document.getElementById("clusters-close");
+    <!-- <script>
+        var modal = document.getElementById('modal-clusters');
+        const clusters_button = document.getElementById('ocrmap-showclusters');
+        // Get the <span> element that closes the modal
+        var clusters_close_button = document.getElementById("clusters-close");
 
-    // When the user clicks on the button, open the modal
-    clusters_button.onclick = function() {
-        modal.style.display = "block";
-    }
+        // When the user clicks on the button, open the modal
+        clusters_button.onclick = function() {
+            modal.style.display = "block";
+        }
 
-    // When the user clicks on <span> (x), close the modal
-    clusters_close_button.onclick = function() {
-        modal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
+        // When the user clicks on <span> (x), close the modal
+        clusters_close_button.onclick = function() {
             modal.style.display = "none";
         }
-    }
-</script>
--->
 
-<script>
-    const sorted_clusters_button = document.getElementById('ocrmap-sortedclusters');
-    sorted_clusters_button.onclick = (event) => {
-        event.preventDefault();
-        let element = document.getElementById("clusters");
-        let json_data = JSON.stringify({'html': element.outerHTML, 'clusters': TMP_PASDINSPI});
-        console.log(TMP_PASDINSPI);
-        $.ajax({
-            type: 'POST',
-            url: "{{ url_for('nermap_to_csv2') }}",
-            data: json_data,
-            processData: false,
-            contentType: "application/json; charset=UTF-8",
-            success: function (response) {      
-                event.preventDefault();
-                let data_export = "data:text/csv;charset=utf-8," + encodeURIComponent(response);
-                let downloadAnchorNode = document.createElement('a');
-                downloadAnchorNode.setAttribute("href",     data_export);
-                downloadAnchorNode.setAttribute("download", "ner2map-clusters.tsv");
-                document.body.appendChild(downloadAnchorNode);
-                downloadAnchorNode.click();
-                downloadAnchorNode.remove();
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
             }
-        });
-    };
-</script>
+        }
+    </script>
+    -->
+
+    <script>
+        const sorted_clusters_button = document.getElementById('ocrmap-sortedclusters');
+        sorted_clusters_button.onclick = (event) => {
+            event.preventDefault();
+            let element = document.getElementById("clusters");
+            let json_data = JSON.stringify({'html': element.outerHTML, 'clusters': TMP_PASDINSPI});
+            console.log(TMP_PASDINSPI);
+            $.ajax({
+                type: 'POST',
+                url: "{{ url_for('nermap_to_csv2') }}",
+                data: json_data,
+                processData: false,
+                contentType: "application/json; charset=UTF-8",
+                success: function (response) {
+                    event.preventDefault();
+                    let data_export = "data:text/csv;charset=utf-8," + encodeURIComponent(response);
+                    let downloadAnchorNode = document.createElement('a');
+                    downloadAnchorNode.setAttribute("href", data_export);
+                    downloadAnchorNode.setAttribute("download", "ner2map-clusters.csv");
+                    document.body.appendChild(downloadAnchorNode);
+                    downloadAnchorNode.click();
+                    downloadAnchorNode.remove();
+                }
+            });
+        };
+    </script>
 {% endblock %}

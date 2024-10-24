@@ -11,8 +11,8 @@ import csv
 
 import spacy
 
-#from flair.data import Sentence as FlairSentence
-#from flair.models import SequenceTagger
+from flair.models import SequenceTagger
+from flair.data import Sentence as FlairSentence
 
 
 def flair_annotate(sentence, modele):
@@ -33,20 +33,19 @@ def get_label_function(annotateur_name, annotateur):
 
 def spacy_iterate(doc):
     for entity in doc.ents:
-        yield (entity.label_, entity.start_char, entity.end_char)
-
+        yield (entity.label_, entity.start_char, entity.end_char, entity.text.strip())
 
 def flair_iterate(doc):
     for entity in doc.get_spans('ner'):
         try:
-            yield (entity.tag, entity.start_position, entity.end_position)
+            yield (entity.tag, entity.start_position, entity.end_position, entity.text.strip())
         except AttributeError:
-            yield (entity.tag, entity.start_pos, entity.end_pos)
+            yield (entity.tag, entity.start_pos, entity.end_pos, entity.text.strip())
 
 
 loaders = {
     "spacy": spacy.load,
-    # "flair": SequenceTagger.load,
+    "flair": SequenceTagger.load,
 }
 
 entity_iterators = {
@@ -70,11 +69,14 @@ def txt_ner_params(texte, moteur, modele, encodage="utf-8"):
     pipeline = loader(modele)
     print(pipeline)
     label_function = get_label_function(moteur, pipeline)
-    try:
-        contenu = texte.decode(encodage)
-    except AttributeError:
+    if not isinstance(texte, bytes):
+        try:
+            contenu = texte.decode(encodage)
+        except AttributeError:
+            contenu = texte
+            print("Erreur dans la spécification de l'encodage.")
+    else:
         contenu = texte
-        print("Erreur dans la spécification de l'encodage.")
     return txt_ner(contenu, label_function, iterator, encodage=encodage)
 
 
@@ -104,10 +106,10 @@ def txt_ner(texte, annotateur, iterateur, encodage="utf-8"):
         - texte
     """
 
-    entities = []
-    for label, start, end in iterateur(annotateur(texte)):
-        entities.append([label, start, end, texte[start:end]])
-    return entities
+    return [
+        (label, start, end, ent_text)
+        for label, start, end, ent_text in iterateur(annotateur(texte))
+    ]
 
 
 def main(
