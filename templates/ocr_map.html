@@ -529,9 +529,18 @@
             var modeleREN = document.getElementById("modele_REN1");
             if (moteurREN.value === "spacy") {
                 modeleREN.innerHTML = `
-          <option value="fr_core_news_sm">fr_core_news_sm</option>
-          <option value="fr_core_news_md">fr_core_news_md</option>
-          <option value="fr_core_news_lg" selected="true">fr_core_news_lg</option>`;
+            <option value="fr_core_news_sm">fr_core_news_sm</option>
+            <option value="fr_core_news_md">fr_core_news_md</option>
+            <option value="fr_core_news_lg" selected="true">fr_core_news_lg</option>
+
+            <option value="pt_core_news_sm">pt_core_news_sm</option>
+            <option value="pt_core_news_md">pt_core_news_md</option>
+            <option value="pt_core_news_lg">pt_core_news_lg</option>
+
+            <option value="en_core_web_sm">en_core_web_sm</option>
+            <option value="en_core_web_md">en_core_web_md</option>
+            <option value="en_core_web_lg">en_core_web_lg</option>
+            `;
             } else if (moteurREN.value === "flair") {
                 modeleREN.innerHTML = '<option value="flair/ner-french" selected="true">flair/ner-french</option>';
             }
@@ -541,9 +550,18 @@
             var modeleREN = document.getElementById("modele_REN2");
             if (moteurREN.value === "spacy") {
                 modeleREN.innerHTML = `
-          <option value="fr_core_news_sm">fr_core_news_sm</option>
-          <option value="fr_core_news_md">fr_core_news_md</option>
-          <option value="fr_core_news_lg" selected="true">fr_core_news_lg</option>`;
+            <option value="fr_core_news_sm">fr_core_news_sm</option>
+            <option value="fr_core_news_md">fr_core_news_md</option>
+            <option value="fr_core_news_lg" selected="true">fr_core_news_lg</option>
+
+            <option value="pt_core_news_sm">pt_core_news_sm</option>
+            <option value="pt_core_news_md">pt_core_news_md</option>
+            <option value="pt_core_news_lg">pt_core_news_lg</option>
+
+            <option value="en_core_web_sm">en_core_web_sm</option>
+            <option value="en_core_web_md">en_core_web_md</option>
+            <option value="en_core_web_lg">en_core_web_lg</option>
+            `;
             } else if (moteurREN.value === "flair") {
                 modeleREN.innerHTML = '<option value="flair/ner-french" selected="true">flair/ner-french</option>';
             } else if (moteurREN.value === "aucun") {
