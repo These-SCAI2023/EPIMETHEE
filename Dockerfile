@@ -33,7 +33,8 @@ WORKDIR /app/
 
 RUN if [ -e pip.conf ]; then cp pip.conf /etc/pip.conf; fi
 
-RUN --mount=type=cache,target=/root/.cache/pip pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 
 RUN --mount=type=cache,target=/root/.cache/pip \
     if [ -e pip.conf ]; then INSTALL_OPTIONS="--index-url http://192.168.2.201:9191/index/"; fi; \
