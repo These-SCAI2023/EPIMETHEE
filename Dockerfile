@@ -4,37 +4,19 @@ FROM python:3.10-slim-bookworm
 
 ARG list_of_packages="linux-headers-amd64 wget gcc cpp make cmake gfortran musl-dev libffi-dev libxml2-dev libxslt-dev libpng-dev"
 
-RUN apt update && apt install -y $list_of_packages
-
-#RUN wget https://github.com/OpenMathLib/OpenBLAS/releases/download/v0.3.27/OpenBLAS-0.3.27.tar.gz \
-#	&& tar -xf OpenBLAS-0.3.27.tar.gz \
-#	&& cd OpenBLAS-0.3.27 \
-#	&& make BINARY=64 FC=$(which gfortran) USE_THREAD=1 \
-#	&& make PREFIX=/usr/lib/openblas install \
-#    && cd .. \
-#    && rm -rf OpenBLAS-0.3.27
-
-#RUN wget https://downloads.sourceforge.net/project/swig/swig/swig-3.0.12/swig-3.0.12.tar.gz?ts=gAAAAABmRK1m1EsbH8oCL7geuqybhgEF3yNS0j2REvwcja2UzHU2bT7s4ZU7gqMqQK0ZDTzecMhN4GWfb8GyWlTgoHLXg9XnDA%3D%3D&r= \
-#    && tar -xf swig-3.0.12.tar.gz \
-#    && cd swig-3.0.12 \
-#    && ./configure \
-#    && make \
-#    && make install \
-#    && cd .. \
-#    && rm -rf swig-3.0.12
+RUN --mount=target=/var/lib/apt/lists,type=cache,sharing=locked \
+    --mount=target=/var/cache/apt,type=cache,sharing=locked \
+    rm -f /etc/apt/apt.conf.d/docker-clean \
+    && apt update \
+    && apt install -y $list_of_packages
 
 RUN --mount=type=cache,target=/root/.cache/pip \
-    ATLAS=/usr/lib/openblas/lib/libopenblas.so LAPACK=/usr/lib/openblas/lib/libopenblas.so pip install scipy
-
-RUN export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib/openblas/lib/
+    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 
 COPY . ./app/
 WORKDIR /app/
 
 RUN if [ -e pip.conf ]; then cp pip.conf /etc/pip.conf; fi
-
-RUN --mount=type=cache,target=/root/.cache/pip \
-    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 
 RUN --mount=type=cache,target=/root/.cache/pip \
     if [ -e pip.conf ]; then INSTALL_OPTIONS="--index-url http://192.168.2.201:9191/index/"; fi; \
