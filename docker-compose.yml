@@ -1,6 +1,7 @@
 services:
   app:
     image: "marceauh/epimethee:latest"
+    restart: unless-stopped
     ports:
       - "8080:8080"
     environment:
@@ -9,6 +10,7 @@ services:
         - REDIS_PASSWORD=secret
   redis:
     image: "redis:alpine"
+    restart: unless-stopped
     ports:
       - "6379:6379"
     environment:
