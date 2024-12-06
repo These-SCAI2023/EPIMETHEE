@@ -41,7 +41,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     pip install -r requirements.txt $INSTALL_OPTIONS
 
 RUN apt remove -y $list_of_packages &&  \
-    apt install -y tesseract-ocr tesseract-ocr-fra tesseract-ocr-eng tesseract-ocr-osd poppler-utils && \
+    apt install -y tesseract-ocr tesseract-ocr-fra tesseract-ocr-eng tesseract-ocr-por tesseract-ocr-osd poppler-utils && \
     apt autoremove -y && apt clean -y && \
     rm -rf /var/lib/apt/lists/* \
     /root/.cache \
