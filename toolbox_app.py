@@ -485,6 +485,10 @@ def nermap_to_csv2():
         for *_, clusters in root_cluster:
             for txt, coords in clusters:
                 name2coordinates[txt] = coords
+        for e in root_cluster:
+            coords = [e[0], e[1]]
+            name2coordinates[e[2]] = coords
+
     print(name2coordinates)
 
     for toolnode in list(html):
