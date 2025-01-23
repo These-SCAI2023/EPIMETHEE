@@ -1,13 +1,13 @@
 # Épiméthée dans Pandore (Toolbox-site ObTIC)
-
+site miroir pour les tests : [https://epimethee.marceau-h.fr/](https://https://epimethee.marceau-h.fr/) 
 ## Installation
 
 ## Via docker
-1. Veillez à avoir docker et docker-compose installés sur votre machine. Pour se faire, veuillez suivre les instructions sur le site officiel de docker : https://docs.docker.com/engine/install/ et suivre les instructions pour votre système d'exploitation.
+1. Veillez à avoir docher et docker-compose installés sur votre machine. Pour se faire, veuillez suivre les instructions sur le site officiel de docker : https://docs.docker.com/engine/install/ et suivre les instructions pour votre système d'exploitation.
 
 2. Clonez le répertoire actuel sur votre machine en utilisant la commande suivante : 
 ```bash
-git clone https://github.com/These-SCAI2023/EPIMETHEE.git
+git clone https://github.com/These-SCAI2023/EPIMETHEE.git -b docker
 ```
 
 2. (bis) Vous pouvez également télécharger le fichier `docker-compose.yml` directement depuis le site github et le placer dans un dossier de votre choix (de préférence vide et nommé `EPIMETHEE` pour éviter les conflits de noms de dockers).
