@@ -1,5 +1,5 @@
 # Épiméthée dans Pandore (Toolbox-site ObTIC)
-site miroir pour les tests : [https://epimethee.marceau-h.fr/](https://https://epimethee.marceau-h.fr/) 
+site miroir pour les tests : [https://epimethee.marceau-h.fr](https://epimethee.marceau-h.fr) 
 ## Installation
 
 ## Via docker
