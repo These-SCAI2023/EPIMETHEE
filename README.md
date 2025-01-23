@@ -3,25 +3,25 @@ site miroir pour les tests : [https://epimethee.marceau-h.fr](https://epimethee.
 ## Installation
 
 ## Via docker
-1. Veillez à avoir docher et docker-compose installés sur votre machine. Pour se faire, veuillez suivre les instructions sur le site officiel de docker : https://docs.docker.com/engine/install/ et suivre les instructions pour votre système d'exploitation.
+1. Veillez à avoir docker et docker compose installés sur votre machine. Pour se faire, veuillez suivre les instructions sur le site officiel de docker : https://docs.docker.com/engine/install/ et suivre les instructions pour votre système d'exploitation.
 
 2. Clonez le répertoire actuel sur votre machine en utilisant la commande suivante : 
 ```bash
 git clone https://github.com/These-SCAI2023/EPIMETHEE.git -b docker
 ```
 
-2. (bis) Vous pouvez également télécharger le fichier `docker-compose.yml` directement depuis le site github et le placer dans un dossier de votre choix (de préférence vide et nommé `EPIMETHEE` pour éviter les conflits de noms de dockers).
+2. (bis) Vous pouvez également télécharger le fichier `docker compose.yml` directement depuis le site github et le placer dans un dossier de votre choix (de préférence vide et nommé `EPIMETHEE` pour éviter les conflits de noms de dockers).
 
 3. Placez-vous dans le répertoire `EPIMETHEE` et lancez la commande suivante pour démarrer les dockers : 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 Il est possible que vous ayez besoin de droits d'administrateur pour lancer cette commande. Dans ce cas, ajoutez `sudo` devant la commande.
 Une fois cette commande lancée, les dockers se téléchargeront et se lanceront automatiquement. Vous pourrez accéder à l'interface de la toolbox en vous rendant à l'adresse http://localhost:8080 dans votre navigateur.
 
 4. Pour arrêter les dockers, placez-vous dans le répertoire `EPIMETHEE` et lancez la commande suivante : 
 ```bash
-docker-compose down
+docker compose down
 ```
 Il est possible que vous ayez besoin de droits d'administrateur pour lancer cette commande. Dans ce cas, ajoutez `sudo` devant la commande.
 
@@ -29,11 +29,11 @@ Il est possible que vous ayez besoin de droits d'administrateur pour lancer cett
 
 Pour mettre à jour l'application, il suffit de se placer dans le répertoire `EPIMETHEE` et de lancer la commande suivante : 
 ```bash
-docker-compose pull
+docker compose pull
 ```
 Il est possible que vous ayez besoin de droits d'administrateur pour lancer cette commande. Dans ce cas, ajoutez `sudo` devant la commande.
 
-Puis relancez les dockers avec la commande `docker-compose up -d` (toujours dans le répertoire `EPIMETHEE` et en ayant les droits d'administrateur si nécessaire).
+Puis relancez les dockers avec la commande `docker compose up -d` (toujours dans le répertoire `EPIMETHEE` et en ayant les droits d'administrateur si nécessaire).
 
 
 ### Installation manuelle (non recommandée) pour linux et mac
