@@ -14,6 +14,12 @@ import spacy
 from flair.models import SequenceTagger
 from flair.data import Sentence as FlairSentence
 
+def load_or_download_spacy(model_name: str) -> spacy.language.Language:
+    try:
+        return spacy.load(model_name)
+    except (OSError, IOError):
+        spacy.cli.download(model_name)
+        return spacy.load(model_name)
 
 def flair_annotate(sentence, modele):
     s = FlairSentence(sentence)
@@ -44,7 +50,7 @@ def flair_iterate(doc):
 
 
 loaders = {
-    "spacy": spacy.load,
+    "spacy": load_or_download_spacy,
     "flair": SequenceTagger.load,
 }
 

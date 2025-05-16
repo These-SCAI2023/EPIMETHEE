@@ -541,7 +541,11 @@
             <option value="en_core_web_lg">en_core_web_lg</option>
             `;
             } else if (moteurREN.value === "flair") {
-                modeleREN.innerHTML = '<option value="flair/ner-french" selected="true">flair/ner-french</option>';
+                modeleREN.innerHTML = `
+                <option value="flair/ner-french" selected="true">flair/ner-french</option>
+                <option value="flair/ner-english">flair/ner-english</option>
+                <option value="flair/ner-portuguese">flair/ner-portuguese</option>
+                `;
             }
         }
 
@@ -562,7 +566,12 @@
             <option value="en_core_web_lg">en_core_web_lg</option>
             `;
             } else if (moteurREN.value === "flair") {
-                modeleREN.innerHTML = '<option value="flair/ner-french" selected="true">flair/ner-french</option>';
+                modeleREN.innerHTML = `
+                <option value="flair/ner-french" selected="true">flair/ner-french</option>
+                <option value="flair/ner-english">flair/ner-english</option>
+                <option value="flair/ner-portuguese">flair/ner-portuguese</option>
+                `;
+
             } else if (moteurREN.value === "aucun") {
                 modeleREN.innerHTML = '<option value="aucun" selected="true">aucun</option>';
             }
