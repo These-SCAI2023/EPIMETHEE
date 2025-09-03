@@ -94,6 +94,10 @@ ____
 
 
 # Bibliographie
+
+
+Koudoro-Parfait, C.*,  Hernandez, M., Dupont, Y., Lejeune, G. (2025). EPIMETHEE - a workflow from OCR to spatial mapping. ICDAR 2025 (Core A).
+
 Koudoro-Parfait, C., Alrahabi, M., Dupont, Y., Lejeune, G., & Roe, G. (2023, juin 30). Mapping spatial named entities from noisy OCR output: Epimetheus from OCR to map. Digital Humanities 2023. Collaboration as Opportunity (DH2023), Graz, Austria. https://doi.org/10.5281/zenodo.8108050
 
 Motasem ALRAHABI, Valentina FEDCHENKO, Ljudmila PETKOVIC, Glenn ROE. Pandore: a toolbox for digital humanities text-based workflows. [soumission acceptée [DH2023](https://dh2023.adho.org/?page_id=390)]
